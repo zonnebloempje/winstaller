@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+
+	<!-- Version 32 or 64 bit with unique IDs-->
+	<?if $(var.Platform)=x64?>
+	<?define ProductCode = "{2DEEB543-5A97-4587-BEE3-5C466BCA9B50}" ?>
+	<?else?>
+	<?define ProductCode = "{C7523643-6A3A-4F89-A91B-B4C343E922A4}" ?>
+	<?endif?>
+
+	<?define UpgradeCode= "{F2A97EE6-0C9D-439C-8F38-6653E82A35CA}" ?>
+
+
+	
+	<Product Id="$(var.ProductCode)" Name="!(loc.BayoApp_$(var.Platform))" Language="!(loc.Language)" Version="$(var.BuildVersion)" Manufacturer="!(loc.Company)" UpgradeCode="$(var.UpgradeCode)">
+		<Package InstallerVersion="200" 
+		         Compressed="yes" 
+		         InstallScope="perMachine"
+		         Platform="$(var.Platform)"
+				 Manufacturer="!(loc.Company)"
+				 Description="!(loc.Description)"
+				 Keywords="!(loc.Keywords)"
+				 Comments="!(loc.Comments)"
+				 Languages="!(loc.Language)"
+		         />
+
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+		
+
+		<!-- Including .cab file into .msi-->
+		<MediaTemplate 
+			EmbedCab="yes"
+		/>
+
+		<!-- Icon -->
+		<Icon Id="icon.ico" SourceFile="$(var.BayoApp.ProjectDir)\app.ico"/>
+		<Property Id="ARPPRODUCTICON">icon.ico</Property>
+
+		<!--Support-->
+		<Property Id="ARPURLINFOABOUT">https://www.bayoapp.com</Property>
+
+		<!--UI installer extension-->
+		<UIRef Id="WixUI_Minimal"/>
+		<WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Assets\background.bmp"/>
+		<WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Assets\license.rtf"/>
+		<WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Assets\banner.bmp"/>
+
+
+		<Feature Id="ProductFeature" Title="BayoApp" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="PublishedComponents" />
+		</Feature>
+
+	</Product>
+
+
+
+
+</Wix>
+

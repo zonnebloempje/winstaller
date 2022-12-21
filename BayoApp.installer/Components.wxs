@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents">
+			<!--Shortcuts-->
+			<ComponentRef Id="ApplicationShortcut" />
+			<ComponentRef Id="ApplicationDesktopShortcut" />
+		</ComponentGroup>
+
+		<DirectoryRef Id="INSTALLFOLDER" FileSource="..\BayoApp\bin\Debug\net6.0-windows\">
+		
+		<!-- Start Menu Shortcut -->
+
+			<Component Id="ApplicationShortcut" Guid="{CD882E9F-0A26-43D5-8879-479DFDEB684A}">
+				<Shortcut Id="ApplicationShortcut" Name="!(loc.BayoApp_$(var.Platform))"  Target="[INSTALLFOLDER]BayoApp.exe" Directory="ProgramMenuFolder" WorkingDirectory="INSTALLFOLDER" Icon="icon.ico" />
+		<!--Unique key for shortcut to work-->
+				<RegistryValue  Root="HKCU" Key="SOFTWARE\$(loc.ProductNameFolder)" Name="Shortcut" Value="1" Type="integer" KeyPath="yes" />
+
+			<!--Removes start menu shortcut-->
+				<RemoveFolder Id="RemoveStartMenu" Directory="InstallMenuFolder" On="uninstall"/>
+
+			</Component>
+
+			<!-- Desktop Shortcut -->
+
+			<Component Id="ApplicationDesktopShortcut" Guid="{44EB2E8E-436B-44A6-8158-8EA087FAFD75}">
+				<Shortcut Id="ApplicationDesktopShortcut" Name="!(loc.BayoApp_$(var.Platform))"  Target="[INSTALLFOLDER]BayoApp.exe" Directory="DesktopFolder" Description="BayoApp is a modern and useful app" WorkingDirectory="INSTALLFOLDER" Icon="icon.ico" />
+				<!--Unique key for shortcut to work-->
+				<RegistryValue Id="RegShortcutKey" Root="HKCU" Key="SOFTWARE\$(loc.ProductNameFolder)" Name="Desktop Shortcut" Value="1" Type="integer" KeyPath="yes" />
+
+				<!--Removes desktop shortcut-->
+				<RemoveFolder Id="RemoveDesktopFolder" Directory="InstallDesktopFolder" On="uninstall"/>
+
+			</Component>
+		
+		</DirectoryRef>
+
+	</Fragment>
+
+
+
+</Wix>
