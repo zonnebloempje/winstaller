@@ -28,10 +28,4 @@ Most of the changes have to be made inside the 'local.wxl' and the [.wixproj](ht
 
 
 
-## Screenshots
-
-🔜
-
-
-
 
